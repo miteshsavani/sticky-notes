@@ -1,14 +1,11 @@
-import { useState } from 'react'
-import './App.css'
+import Notes from './components/notes';
 
 function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <p>Sticky Notes project</p>
-    </>
-  )
+	return (
+		<>
+			<Notes />
+		</>
+	);
 }
 
-export default App
+export default App;
