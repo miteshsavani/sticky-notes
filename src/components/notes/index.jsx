@@ -158,15 +158,24 @@ const Notes = () => {
 		setTextNote('');
 	}, [textNote]);
 
-	const removeNote = useCallback((id) => {
-		setNotes((currentNotes) => currentNotes.filter((note) => note.id !== id));
-	}, []);
+	const removeNote = useCallback(
+		(id) => {
+			const updatedNotes = notes.filter((note) => note.id !== id);
+			setNotes(updatedNotes);
+			localStorage.setItem(notesKey, JSON.stringify(updatedNotes));
+		},
+		[notes]
+	);
 
 	return (
 		<>
 			<div className="inputBlock">
 				<textarea value={textNote} onChange={onTextNoteChange} />
-				<button type="button" onClick={onButtonClick} disabled={!textNote.length} >
+				<button
+					type="button"
+					onClick={onButtonClick}
+					disabled={!textNote.length}
+				>
 					Add Note
 				</button>
 			</div>
