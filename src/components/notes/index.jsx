@@ -33,6 +33,29 @@ const Notes = () => {
 	const noteRefs = useRef([]);
 	const displayAreaRef = useRef(null);
 
+	const checkForOverLap = useCallback(
+		(id) => {
+			const currentNoteRef = noteRefs.current[id].current;
+			const currentRect = currentNoteRef.getBoundingClientRect();
+
+			return notes.some((note) => {
+				if (note.id === id) return false;
+
+				const otherNoteRef = noteRefs.current[note.id].current;
+				const otherRect = otherNoteRef.getBoundingClientRect();
+
+				const overlap = !(
+					currentRect.right < otherRect.left ||
+					currentRect.left > otherRect.right ||
+					currentRect.bottom < otherRect.top ||
+					currentRect.top > otherRect.bottom
+				);
+				return overlap;
+			});
+		},
+		[notes]
+	);
+
 	useEffect(() => {
 		const isNoteWithoutPositionPresent =
 			!!displayAreaRef.current && notes.some((note) => !note.position);
@@ -110,29 +133,6 @@ const Notes = () => {
 		document.addEventListener('mousemove', handleMouseMove);
 		document.addEventListener('mouseup', handleMouseUp);
 	};
-
-	const checkForOverLap = useCallback(
-		(id) => {
-			const currentNoteRef = noteRefs.current[id].current;
-			const currentRect = currentNoteRef.getBoundingClientRect();
-
-			return notes.some((note) => {
-				if (note.id === id) return false;
-
-				const otherNoteRef = noteRefs.current[note.id].current;
-				const otherRect = otherNoteRef.getBoundingClientRect();
-
-				const overlap = !(
-					currentRect.right < otherRect.left ||
-					currentRect.left > otherRect.right ||
-					currentRect.bottom < otherRect.top ||
-					currentRect.top > otherRect.bottom
-				);
-				return overlap;
-			});
-		},
-		[notes]
-	);
 
 	const updateNotePosition = useCallback(
 		(id, newPosition) => {

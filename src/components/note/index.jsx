@@ -18,6 +18,7 @@ const Note = forwardRef(({ note, handleMouseDown, removeNote }, ref) => {
 				color: 'black',
 				cursor: 'move',
 				userSelect: 'none',
+				visibility: `${position?.x ? 'visible' : 'hidden'}`,
 			}}
 			onMouseDown={handleMouseDown}
 		>
