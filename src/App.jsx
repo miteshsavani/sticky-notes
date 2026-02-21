@@ -1,10 +1,9 @@
 import Notes from './components/notes';
 
+//New Change
 function App() {
 	return (
-		<>
-			<Notes />
-		</>
+		<Notes />
 	);
 }
 
